@@ -9,6 +9,6 @@
     "direction": "aerial-manipulation",
     "status": "Open project",
     "blurb": "Teams of two or three quadrotors that grasp, lift and reorient unknown objects using only onboard sensing, combining pretrained visuomotor policies with reinforcement learning and control theory. Starts with a single quadrotor and gripper.",
-    "source": "../../Projects/2026-09-22 Master's thesis Visuomotor Cooperative Manipulation of Payloads with"
+    "source": "../../Projects/2026-09-22 Master's thesis Visuomotor Cooperative Manipulation With Teams of Quadrotors"
   }
 ]

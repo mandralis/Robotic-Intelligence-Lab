@@ -289,5 +289,6 @@ ul.ongoing li { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap:
 ul.ongoing a { font-weight: 600; font-size: 16.5px; }
 .og-text { color: var(--muted); font-size: 15.5px; line-height: 1.55; }
 .og-pdf { display: inline-block; margin-left: 8px; padding: 1px 6px; border: 1px solid currentColor; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: .08em; vertical-align: 2px; }
+ul.ongoing + p, ul.ongoing + p + p { margin-top: 24px; }
 h2 + p + .featured { margin-top: 28px; }
 @media (max-width: 480px) { ul.ongoing li { grid-template-columns: 1fr; } .og-status { grid-row: auto; } }

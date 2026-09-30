@@ -21,17 +21,24 @@ It prints http://localhost:4000/; Cmd-click it to open the site. Refresh the bro
 
 ## Project briefs
 
-Student project briefs made in Project Desk (`Faculty/Projects`) are listed under
-"Current directions" on `research.html`. To publish one, compile it in Project Desk,
-then from this folder:
+Student project briefs made in Project Desk (`Faculty/Projects`) are listed under their
+research direction on `research.html`, and the open ones also in the Student projects
+section of `openings.html`. Compile the brief in Project Desk first, then either
+double-click **Publish brief.command** in Finder or run
 
-    python3 publish-brief.py "Visuomotor"                           # part of the folder name
-    python3 publish-brief.py "Visuomotor" --blurb "One line for the site."
-    python3 publish-brief.py "Visuomotor" --direction multimodal-design
-    python3 publish-brief.py "Visuomotor" --status "Filled"
-    python3 publish-brief.py --refresh                              # after editing a brief
+    python3 publish-brief.py
+
+and follow the menu: pick the project, pick the direction (or create a new one), set the
+label ("Open project", "Filled", ...) and the one-line description. The same menu changes
+the direction or label of a published brief, refreshes the PDFs after you edit briefs, and
+takes briefs off the site.
+
+Without the menu:
+
+    python3 publish-brief.py --publish "Visuomotor" --direction aerial-manipulation
+    python3 publish-brief.py --refresh
     python3 publish-brief.py --list
     python3 publish-brief.py --remove <slug>
 
-The PDF is copied to `projects/<slug>.pdf`, the entry is kept in `projects/briefs.json`,
-and the list between the `<!-- briefs:... -->` markers in `research.html` is rewritten.
+The PDF is copied to `projects/<slug>.pdf`, entries are kept in `projects/briefs.json`, and
+the lists between the `<!-- briefs:... -->` markers are rewritten. Then commit and push.
