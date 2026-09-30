@@ -1,0 +1,14 @@
+[
+  {
+    "id": "v8etbzg",
+    "slug": "visuomotor-cooperative-manipulation-with-teams-of-quadrotors",
+    "title": "Visuomotor Cooperative Manipulation with Teams of Quadrotors",
+    "kind": "Master's thesis",
+    "start": "January 2027",
+    "deadline": "July 2027",
+    "direction": "aerial-manipulation",
+    "status": "Open project",
+    "blurb": "Teams of two or three quadrotors that grasp, lift and reorient unknown objects using only onboard sensing, combining pretrained visuomotor policies with reinforcement learning and control theory. Starts with a single quadrotor and gripper.",
+    "source": "../../Projects/2026-09-22 Master's thesis Visuomotor Cooperative Manipulation of Payloads with"
+  }
+]

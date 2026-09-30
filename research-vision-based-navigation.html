@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vision-Based Navigation and Manipulation &middot; Mandralis Lab</title>
+  <meta name="description" content="Perception that informs physical decisions. A robot with several ways to move should choose its route by what it will cost, not only by whether it is passable. We learn from camera images alone, and without human labels, how much energy the terrain ahead will demand, and plan with it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+  <link rel="stylesheet" href="lab.css">
+  <script src="logos/logo.js" defer></script>
+</head>
+<body>
+<div class="frame">
+  <header class="site-header">
+    <div class="brand-row inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="logos/lift.svg" alt="" aria-hidden="true">
+        <span class="brand-text"><span class="brand-name">Mandralis Lab</span><span class="brand-sub">University of Cambridge</span></span>
+      </a>
+    </div>
+    <div class="navbar">
+      <nav class="nav inner" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="research.html" aria-current="page">Research</a>
+        <a href="people.html">People</a>
+        <a href="publications.html">Publications</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="openings.html">Openings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="inner">
+
+      <p class="crumbs"><a href="research.html">Research</a> <span>/</span> Featured research</p>
+      <h1>Vision-Based Navigation and Manipulation</h1>
+      <p class="lede">Perception that informs physical decisions. A robot with several ways to move should choose its route by what it will cost, not only by whether it is passable. We learn from camera images alone, and without human labels, how much energy the terrain ahead will demand, and plan with it.</p>
+      
+      <section class="paper" id="cost-of-transport">
+        <div class="paper-text">
+          <p class="paper-meta">IEEE Robotics and Automation Letters &middot; 2025</p>
+          <h2 class="paper-title">Self-supervised cost of transport estimation for multimodal path planning</h2>
+          <p class="paper-authors">V. Gherold, <strong>I. Mandralis</strong>, E. Sihite, A. Salagame, A. Ramezani, M. Gharib</p>
+          <p>Which way costs the least energy? From camera images alone, the multimodal M4 robot learns to predict the cost of transport of the terrain ahead, labelling its own training data as it drives and running the whole pipeline onboard a Jetson Orin Nano.</p>
+          <p class="paper-links"><a href="https://ieeexplore.ieee.org/document/11012130">Paper</a> <a href="https://github.com/VinceGHER/self_supervised_cot_estimation">Code</a> <a href="https://youtu.be/Jr1o9mS4xtE">Video</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig"><img src="images/featured/3a-i.jpg" alt="Campus terrain, the robot&#x27;s trajectory from above, and the resulting cost-of-transport map with two planned paths" loading="lazy"><figcaption><strong>Seeing energy in terrain.</strong> The terrain, the robot's route, and the cost-of-transport map it learned. A planner on this map prefers the red path along the road to the yellow one across the grass: 59&nbsp;m instead of 56&nbsp;m, but less energy spent.</figcaption></figure>
+          <figure class="fig"><img src="images/featured/3a-ii.jpg" alt="Pipeline from RGB and depth images to pixel-wise cost of transport, local and global bird&#x27;s-eye-view maps" loading="lazy"><figcaption><strong>From pixels to a map.</strong> A network predicts cost of transport pixel by pixel from RGB-D images. Each prediction is projected into a local bird's-eye view and merged into a global map for planning.</figcaption></figure>
+        </div>
+      </section>
+      <section class="paper" id="vla-drone-navigation">
+        <div class="paper-text">
+          <p class="paper-meta">In preparation &middot; 2026</p>
+          <h2 class="paper-title">Vision-language-action models for drone navigation in synthetic environments</h2>
+          <p class="paper-authors">A. Pantalos, supervised by <strong>I. Mandralis</strong> and M. Kovač</p>
+          <p>Can a drone be told where to fly in plain language? We rebuild real flight spaces as synthetic Gaussian splat environments &mdash; the DroneHub at NEST, and the flight arena at LSR &mdash; and fly a drone through them in simulation under an expert model-predictive controller running acados. Those expert flights then train vision-language-action models such as &pi;<sub>0</sub>, fine-tuned with imitation learning, until the policy reaches a target named in a prompt from camera images alone. The aim is to carry the same scene understanding from navigation into aerial manipulation. The work began as a semester project.</p>
+          <p class="paper-links"><a href="https://www.empa.ch/web/nest/drone-hub">DroneHub at NEST</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig"><video src="videos/vla-drone-navigation.mp4" poster="images/featured/3b-i.jpg" controls preload="none" playsinline></video><figcaption><strong>&ldquo;Navigate to the red target.&rdquo;</strong> The fine-tuned policy flying in simulation, choosing its heading from the prompt and what its camera sees inside the reconstructed DroneHub.</figcaption></figure>
+          <figure class="fig"><img src="images/featured/3b-ii.jpg" alt="Gaussian splat reconstruction of the DroneHub flight space, with coloured targets on the floor and reconstructed camera poses" loading="lazy"><figcaption><strong>A flight space, rebuilt from photographs.</strong> The Gaussian splat reconstruction used for training, with coloured targets placed through the scene. Expert trajectories flown here become the demonstrations the policy imitates.</figcaption></figure>
+        </div>
+      </section>
+      <p class="more-dirs"><span>More research</span> <a href="research-ground-aerial-robotics.html">Ground-Aerial Morphing Robotics</a> &middot; <a href="research-learning-based-control.html">Learning-Based Control</a> &middot; <a href="research-fluid-body-interaction.html">Fluid-Body Interaction and Flow Control</a></p>
+
+  </main>
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="foot-brand">
+        <p class="lab">Mandralis Lab</p>
+        <a class="uni-logo" href="https://www.eng.cam.ac.uk/"><img src="media/cambridge-logo.png" alt="University of Cambridge" width="174" height="35"></a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:imm38@cam.ac.uk">imm38@cam.ac.uk</a><br>Department of Engineering<br>Trumpington Street, Cambridge CB2 1PZ</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://scholar.google.com/citations?hl=en&user=56UwRyEAAAAJ">Google Scholar</a></li>
+          <li><a href="https://github.com/mandralis">GitHub</a></li>
+          <li><a href="https://mandralis.github.io/">Ioannis Mandralis</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

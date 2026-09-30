@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research &middot; Mandralis Lab</title>
+  <meta name="description" content="Research at the Mandralis Lab: aerial manipulation via reinforcement learning and task-driven multi-modal robot design.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+  <link rel="stylesheet" href="lab.css">
+  <script src="logos/logo.js" defer></script>
+</head>
+<body>
+<div class="frame">
+  <header class="site-header">
+    <div class="brand-row inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="logos/lift.svg" alt="" aria-hidden="true">
+        <span class="brand-text"><span class="brand-name">Mandralis Lab</span><span class="brand-sub">University of Cambridge</span></span>
+      </a>
+    </div>
+    <div class="navbar">
+      <nav class="nav inner" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="research.html" aria-current="page">Research</a>
+        <a href="people.html">People</a>
+        <a href="publications.html">Publications</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="openings.html">Openings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="inner">
+
+      <h1>Research</h1>
+      <p class="lede">Aerial robots can reach places nothing else can, but they are still poor at interacting with the physical world. Batteries limit how long they fly, and precise, autonomous physical interaction needs advances in control, perception, collaboration, and learning. We work on this topic, in two directions.</p>
+
+      <h2>Current directions</h2>
+      <div class="direction" id="aerial-manipulation">
+        <h3 class="dir-title">Aerial manipulation via reinforcement learning</h3>
+        <p>We develop aerial manipulators with task-specific end-effectors and train them with reinforcement learning to perform contact-rich behaviours using only onboard sensing, such as RGB-D and inertial cues. The central theme is energy-aware autonomy: controllers that use perching, bracing and contact to improve stability and force transfer, so that long-duration manipulation becomes realistic.</p>
+        <ul class="ongoing">
+          <li><span class="og-status">In progress</span><a href="research-vision-based-navigation.html#vla-drone-navigation">Vision-language-action models for drone navigation</a><span class="og-text">Drones that fly to a target named in plain language, trained in Gaussian-splat reconstructions of real flight spaces, as a first step toward language-guided aerial manipulation. With A. Pantalos and M. Kova&#269;.</span></li>
+          <!-- briefs:aerial-manipulation -->
+          <li class="og-brief"><span class="og-status">Open project</span><a href="projects/visuomotor-cooperative-manipulation-with-teams-of-quadrotors.pdf" target="_blank" rel="noopener">Visuomotor Cooperative Manipulation with Teams of Quadrotors<span class="og-pdf">PDF</span></a><span class="og-text">Master&#x27;s thesis, January 2027 to July 2027. Teams of two or three quadrotors that grasp, lift and reorient unknown objects using only onboard sensing, combining pretrained visuomotor policies with reinforcement learning and control theory. Starts with a single quadrotor and gripper.</span></li>
+          <!-- /briefs:aerial-manipulation -->
+        </ul>
+      </div>
+      <div class="direction" id="multimodal-design">
+        <h3 class="dir-title">Task-driven multi-modal robot design</h3>
+        <p>Multimodal robots have clear advantages, but their design space is largely unexplored. Instead of a single &ldquo;optimal&rdquo; configuration, we look for morphologies tailored to specific tasks, found by inverse design that links task requirements to morphology, actuation and aerodynamics. In parallel we study how fluid&ndash;structure interaction, such as passive thrust vectoring and proximity to walls and ceilings, can improve efficiency and control authority.</p>
+        <ul class="ongoing">
+          <li><span class="og-status">Under review</span><a href="research-ground-aerial-robotics.html#wake-vectoring">Wake vectoring for efficient morphing flight</a><span class="og-text">Passive deflectors in the frame of a morphing robot recover up to 40% of the thrust lost when its rotors tilt. With S. Schumacher and M. Gharib.</span></li>
+          <li><span class="og-status">In progress</span><a href="research-fluid-body-interaction.html#proteus">Robotic water jetting with an elastic artificial mantle</a><span class="og-text">A robot that propels itself by changing shape: an elastic mantle stores energy as it fills and releases it as a jet of water. With J. Ro, P. H. Nguyen and M. Kova&#269;.</span></li>
+          <!-- briefs:multimodal-design --><!-- /briefs:multimodal-design -->
+        </ul>
+      </div>
+
+      <h2>Featured research</h2>
+      <p>The work the lab builds on, from Caltech, ETH Zurich and EPFL. Each topic opens a page with its papers, figures and videos; the full list is on the <a href="publications.html">Publications</a> page.</p>
+      <div class="featured" id="featured" aria-roledescription="carousel" aria-label="Featured research">
+        <div class="fx-viewport" tabindex="0">
+          <article class="fx-slide is-active" id="fx-ground-aerial-robotics" aria-roledescription="slide" aria-label="1 of 4">
+            <a class="fx-media" href="research-ground-aerial-robotics.html" tabindex="-1" aria-hidden="true" style="--fx-bg: url('images/featured/1a-i.jpg')">
+              <img src="images/featured/1a-i.jpg" alt="" decoding="async">
+            </a>
+            <div class="fx-text">
+              <p class="fx-meta"><span class="fx-tag">Featured research</span></p>
+              <h2 class="fx-title"><a href="research-ground-aerial-robotics.html">Ground-Aerial Morphing Robotics</a></h2>
+              <p class="fx-summary">Robots that fly and drive with the same body. We design morphobots that reuse one set of actuators across locomotion modes and transform in mid-air to land on their wheels, and we study the aerodynamics that make such transitions possible: ground effect close to touchdown, and rotor wake that can be redirected rather than lost.</p>
+              <p class="fx-links">
+              <a class="fx-learn" href="research-ground-aerial-robotics.html">Learn more <span aria-hidden="true">&rarr;</span></a>
+              <a class="fx-extra" href="https://www.youtube.com/watch?v=5w7pl7xQGKM" target="_blank" rel="noopener">Caltech video</a>
+              <a class="fx-extra" href="videos/IROS-demo-skyarabia-coverage.mp4" target="_blank" rel="noopener">Sky News Arabia</a>
+              <a class="fx-extra" href="videos/TII-demo-video.mp4" target="_blank" rel="noopener">TII delivery demo</a>
+              </p>
+            </div>
+          </article>
+          <article class="fx-slide" id="fx-learning-based-control" aria-roledescription="slide" aria-label="2 of 4" aria-hidden="true">
+            <a class="fx-media fx-blend" href="research-learning-based-control.html" tabindex="-1" aria-hidden="true" style="--fx-bg: url('images/featured/2a-i.jpg')">
+              <img src="images/featured/2a-i.jpg" alt="" loading="lazy" decoding="async">
+            </a>
+            <div class="fx-text">
+              <p class="fx-meta"><span class="fx-tag">Featured research</span></p>
+              <h2 class="fx-title"><a href="research-learning-based-control.html">Learning-Based Control</a></h2>
+              <p class="fx-summary">We combine machine learning with physics-based control so robots can move with agility and adapt to new conditions, while their behaviour stays interpretable.</p>
+              <p class="fx-links">
+              <a class="fx-learn" href="research-learning-based-control.html">Learn more <span aria-hidden="true">&rarr;</span></a>
+              <a class="fx-extra" href="https://www.caltech.edu/about/news/scientists-teach-ai-to-navigate-ocean-with-minimal-energy" target="_blank" rel="noopener">Caltech News</a>
+              </p>
+            </div>
+          </article>
+          <article class="fx-slide" id="fx-fluid-body-interaction" aria-roledescription="slide" aria-label="3 of 4" aria-hidden="true">
+            <a class="fx-media fx-blend" href="research-fluid-body-interaction.html" tabindex="-1" aria-hidden="true" style="--fx-bg: url('images/featured/2d-i.jpg')">
+              <img src="images/featured/2d-i.jpg" alt="" loading="lazy" decoding="async">
+            </a>
+            <div class="fx-text">
+              <p class="fx-meta"><span class="fx-tag">Featured research</span></p>
+              <h2 class="fx-title"><a href="research-fluid-body-interaction.html">Fluid-Body Interaction and Flow Control</a></h2>
+              <p class="fx-summary">Bodies and flows shape each other. We study how a deforming body sheds vorticity in order to move, and how a flow field can be prescribed in the first place: reinforcement learning finds the escape kinematics of larval fish under an energy budget, and a data-driven model turns a wall of fans into wind on demand.</p>
+              <p class="fx-links">
+              <a class="fx-learn" href="research-fluid-body-interaction.html">Learn more <span aria-hidden="true">&rarr;</span></a>
+              </p>
+            </div>
+          </article>
+          <article class="fx-slide" id="fx-vision-based-navigation" aria-roledescription="slide" aria-label="4 of 4" aria-hidden="true">
+            <a class="fx-media" href="research-vision-based-navigation.html" tabindex="-1" aria-hidden="true" style="--fx-bg: url('images/featured/3a-i.jpg')">
+              <img src="images/featured/3a-i.jpg" alt="" loading="lazy" decoding="async">
+            </a>
+            <div class="fx-text">
+              <p class="fx-meta"><span class="fx-tag">Featured research</span></p>
+              <h2 class="fx-title"><a href="research-vision-based-navigation.html">Vision-Based Navigation and Manipulation</a></h2>
+              <p class="fx-summary">Perception that informs physical decisions. A robot with several ways to move should choose its route by what it will cost, not only by whether it is passable. We learn from camera images alone, and without human labels, how much energy the terrain ahead will demand, and plan with it.</p>
+              <p class="fx-links">
+              <a class="fx-learn" href="research-vision-based-navigation.html">Learn more <span aria-hidden="true">&rarr;</span></a>
+              </p>
+            </div>
+          </article>
+        </div>
+        <div class="fx-controls">
+          <button type="button" class="fx-arrow fx-prev" aria-label="Previous">&#8249;</button>
+          <div class="fx-dots" aria-label="Choose slide">
+            <button type="button" class="fx-dot is-active" data-go="0" aria-label="Slide 1: Ground-Aerial Morphing Robotics" aria-current="true"><span></span></button>
+            <button type="button" class="fx-dot" data-go="1" aria-label="Slide 2: Learning-Based Control"><span></span></button>
+            <button type="button" class="fx-dot" data-go="2" aria-label="Slide 3: Fluid-Body Interaction and Flow Control"><span></span></button>
+            <button type="button" class="fx-dot" data-go="3" aria-label="Slide 4: Vision-Based Navigation and Manipulation"><span></span></button>
+          </div>
+          <button type="button" class="fx-arrow fx-next" aria-label="Next">&#8250;</button>
+        </div>
+      </div>
+
+  </main>
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="foot-brand">
+        <p class="lab">Mandralis Lab</p>
+        <a class="uni-logo" href="https://www.eng.cam.ac.uk/"><img src="media/cambridge-logo.png" alt="University of Cambridge" width="174" height="35"></a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:imm38@cam.ac.uk">imm38@cam.ac.uk</a><br>Department of Engineering<br>Trumpington Street, Cambridge CB2 1PZ</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://scholar.google.com/citations?hl=en&user=56UwRyEAAAAJ">Google Scholar</a></li>
+          <li><a href="https://github.com/mandralis">GitHub</a></li>
+          <li><a href="https://mandralis.github.io/">Ioannis Mandralis</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+  <script src="featured.js" defer></script>
+</body>
+</html>

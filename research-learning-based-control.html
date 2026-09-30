@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning-Based Control &middot; Mandralis Lab</title>
+  <meta name="description" content="We combine machine learning with physics-based control so robots can move with agility and adapt to new conditions, while their behaviour stays interpretable.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+  <link rel="stylesheet" href="lab.css">
+  <script src="logos/logo.js" defer></script>
+</head>
+<body>
+<div class="frame">
+  <header class="site-header">
+    <div class="brand-row inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="logos/lift.svg" alt="" aria-hidden="true">
+        <span class="brand-text"><span class="brand-name">Mandralis Lab</span><span class="brand-sub">University of Cambridge</span></span>
+      </a>
+    </div>
+    <div class="navbar">
+      <nav class="nav inner" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="research.html" aria-current="page">Research</a>
+        <a href="people.html">People</a>
+        <a href="publications.html">Publications</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="openings.html">Openings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="inner">
+
+      <p class="crumbs"><a href="research.html">Research</a> <span>/</span> Featured research</p>
+      <h1>Learning-Based Control</h1>
+      <p class="lede">We combine machine learning with physics-based control so robots can move with agility and adapt to new conditions, while their behaviour stays interpretable.</p>
+      <p class="coverage">In the media: <a href="https://www.caltech.edu/about/news/scientists-teach-ai-to-navigate-ocean-with-minimal-energy">Caltech News</a></p>
+      <section class="paper" id="morpho-transition">
+        <div class="paper-text">
+          <p class="paper-meta">IROS · Oral presentation &middot; 2025</p>
+          <h2 class="paper-title">Quadrotor morpho-transition: learning vs model-based control strategies</h2>
+          <p class="paper-authors"><strong>I. Mandralis</strong>, R. M. Murray, M. Gharib</p>
+          <p>Landing by transformation drives a quadrotor to the edge of actuator saturation. On hardware, an end-to-end reinforcement learning policy lands with more agility, but only once motor dynamics and sensing delays are part of its training world. Model-predictive control transfers out of the box, yet recovers less gracefully when actuators fail unexpectedly.</p>
+          <p class="paper-links"><a href="https://ieeexplore.ieee.org/document/11246175">Paper</a> <a href="https://arxiv.org/abs/2506.14039">arXiv</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig"><img src="images/featured/2a-i.jpg" alt="Block diagram of the training loop: policy, motor dynamics, body dynamics and simulator" loading="lazy"><figcaption><strong>Training on what the hardware feels.</strong> The learned policy &pi;(<em>s</em>) acts through first-order models of the motors and of the morphing body, so that thrust, moment and tilt commands reach the simulated robot with the same lags as the real one.</figcaption></figure>
+          <figure class="fig"><img src="images/featured/2a-ii.jpg" alt="Time-lapse of ATMO landing on its wheels under a learned policy, with position, velocity and attitude plots" loading="lazy"><figcaption><strong>A learned landing.</strong> Under the RL policy, ATMO descends, folds its rotors and touches down on its wheels at a 65&deg; tilt. Roll and pitch stay within a few hundredths of a radian until the moment of impact.</figcaption></figure>
+        </div>
+      </section>
+      <section class="paper" id="vortical-navigation">
+        <div class="paper-text">
+          <p class="paper-meta">Nature Communications &middot; 2021</p>
+          <h2 class="paper-title">Learning efficient navigation in vortical flow fields</h2>
+          <p class="paper-authors">P. Gunnarson, <strong>I. Mandralis</strong>, G. Novati, P. Koumoutsakos, J. O. Dabiri</p>
+          <p>Reaching a target through unsteady currents with only local information. Reinforcement learning finds navigation policies for a fixed-speed swimmer in a cylinder wake that use the flow rather than fight it. What the swimmer senses matters: sensing velocity outperformed bio-inspired vorticity sensing, reaching the target nearly every time and approaching the travel time of optimal trajectories.</p>
+          <p class="paper-links"><a href="https://www.nature.com/articles/s41467-021-27015-y">Paper</a> <a href="https://www.caltech.edu/about/news/scientists-teach-ai-to-navigate-ocean-with-minimal-energy">Caltech News</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig"><img src="images/featured/2c-i.jpg" alt="A swimmer&#x27;s learned path through the vortex wake behind a cylinder, with a close-up of the local flow field" loading="lazy"><figcaption><strong>Riding the wake.</strong> A swimmer steered by a learned policy crosses the unsteady wake of a cylinder to reach its target (A). Up close (B), its path weaves between counter-rotating vortices, taking the currents that carry it forward.</figcaption></figure>
+        </div>
+      </section>
+      <p class="more-dirs"><span>More research</span> <a href="research-ground-aerial-robotics.html">Ground-Aerial Morphing Robotics</a> &middot; <a href="research-fluid-body-interaction.html">Fluid-Body Interaction and Flow Control</a> &middot; <a href="research-vision-based-navigation.html">Vision-Based Navigation and Manipulation</a></p>
+
+  </main>
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="foot-brand">
+        <p class="lab">Mandralis Lab</p>
+        <a class="uni-logo" href="https://www.eng.cam.ac.uk/"><img src="media/cambridge-logo.png" alt="University of Cambridge" width="174" height="35"></a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:imm38@cam.ac.uk">imm38@cam.ac.uk</a><br>Department of Engineering<br>Trumpington Street, Cambridge CB2 1PZ</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://scholar.google.com/citations?hl=en&user=56UwRyEAAAAJ">Google Scholar</a></li>
+          <li><a href="https://github.com/mandralis">GitHub</a></li>
+          <li><a href="https://mandralis.github.io/">Ioannis Mandralis</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

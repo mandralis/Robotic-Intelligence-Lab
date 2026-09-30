@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fluid-Body Interaction and Flow Control &middot; Mandralis Lab</title>
+  <meta name="description" content="Bodies and flows shape each other. We study how a deforming body sheds vorticity in order to move, and how a flow field can be prescribed in the first place: reinforcement learning finds the escape kinematics of larval fish under an energy budget, and a data-driven model turns a wall of fans into wi">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+  <link rel="stylesheet" href="lab.css">
+  <script src="logos/logo.js" defer></script>
+</head>
+<body>
+<div class="frame">
+  <header class="site-header">
+    <div class="brand-row inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="logos/lift.svg" alt="" aria-hidden="true">
+        <span class="brand-text"><span class="brand-name">Mandralis Lab</span><span class="brand-sub">University of Cambridge</span></span>
+      </a>
+    </div>
+    <div class="navbar">
+      <nav class="nav inner" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="research.html" aria-current="page">Research</a>
+        <a href="people.html">People</a>
+        <a href="publications.html">Publications</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="openings.html">Openings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="inner">
+
+      <p class="crumbs"><a href="research.html">Research</a> <span>/</span> Featured research</p>
+      <h1>Fluid-Body Interaction and Flow Control</h1>
+      <p class="lede">Bodies and flows shape each other. We study how a deforming body sheds vorticity in order to move, and how a flow field can be prescribed in the first place: reinforcement learning finds the escape kinematics of larval fish under an energy budget, and a data-driven model turns a wall of fans into wind on demand.</p>
+      
+      <section class="paper" id="larval-fish">
+        <div class="paper-text">
+          <p class="paper-meta">Physical Review Fluids &middot; 2021</p>
+          <h2 class="paper-title">Learning swimming escape patterns for larval fish under energy constraints</h2>
+          <p class="paper-authors"><strong>I. Mandralis</strong>, P. Weber, G. Novati, P. Koumoutsakos</p>
+          <p>How should a larval fish escape a predator when energy is limited? Reinforcement learning coupled to flow simulations rediscovers the classic C-start and also finds more economical escapes: covering the most distance on a fixed energy budget calls for short bursts of acceleration interleaved with gliding.</p>
+          <p class="paper-links"><a href="https://doi.org/10.1103/PhysRevFluids.6.093101">Paper</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig tall"><img src="images/featured/2d-i.jpg" alt="Vorticity shed by two escaping larval fish, above midline kinematics of a learned escape and a C-start" loading="lazy"><figcaption><strong>Escape patterns, learned and classic.</strong> The vortices shed by two escape manoeuvres (top), and the body midlines of an escape discovered by reinforcement learning beside the classic C-start (bottom).</figcaption></figure>
+        </div>
+      </section>
+      <section class="paper" id="fan-array">
+        <div class="paper-text">
+          <p class="paper-meta">Flow &middot; 2026</p>
+          <h2 class="paper-title">Data-driven modelling for on-demand flow prescription in fan-array wind tunnels</h2>
+          <p class="paper-authors">A. Stefan-Zavala, I. Scherl, <strong>I. Mandralis</strong>, S. L. Brunton, M. Gharib</p>
+          <p>A wall of individually controlled fans can, in principle, produce any wind field, but turning a target flow into fan commands is a high-dimensional problem. From measurements alone we fit a surrogate model that maps fan speeds to time-averaged velocity profiles, invert it to prescribe flows on demand, and find the physics to be dominantly linear: a superposition of self-similar jets.</p>
+          <p class="paper-links"><a href="https://doi.org/10.1017/flo.2025.10034">Paper</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig"><img src="images/featured/2b-i.jpg" alt="Schematic of a fan-array wind tunnel with fan-speed and velocity profiles, and the linear surrogate model" loading="lazy"><figcaption><strong>Shaping wind with a wall of fans.</strong> A profile of fan speeds (ii) produces jets that mix downstream into velocity profiles (iii), recorded by a sensor array (iv). A regularised linear map, <em>A</em>&middot;<em>r</em> + <em>b</em>, predicts the flow from the fan speeds and, run in reverse, finds the fan speeds that produce a target profile.</figcaption></figure>
+        </div>
+      </section>
+      <section class="paper no-figs" id="proteus">
+        <div class="paper-text">
+          <p class="paper-meta">In preparation &middot; 2026</p>
+          <h2 class="paper-title">Robotic water jetting with an elastically loaded artificial mantle</h2>
+          <p class="paper-authors">J. Ro, <strong>I. Mandralis</strong>, P. H. Nguyen, M. Kovač</p>
+          <p>The Proteus project asks how a robot can propel itself by changing shape. An elastic artificial mantle stores energy as it is filled and releases it in a jet of water, an actuation principle that comes from the body itself rather than from a thruster. We are studying the fundamental questions behind it &mdash; how morphology, elastic storage and the surrounding fluid combine into useful thrust &mdash; with the goal of robots that sample and monitor lakes and other bodies of water.</p>
+          
+        </div>
+
+      </section>
+      <p class="more-dirs"><span>More research</span> <a href="research-ground-aerial-robotics.html">Ground-Aerial Morphing Robotics</a> &middot; <a href="research-learning-based-control.html">Learning-Based Control</a> &middot; <a href="research-vision-based-navigation.html">Vision-Based Navigation and Manipulation</a></p>
+
+  </main>
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="foot-brand">
+        <p class="lab">Mandralis Lab</p>
+        <a class="uni-logo" href="https://www.eng.cam.ac.uk/"><img src="media/cambridge-logo.png" alt="University of Cambridge" width="174" height="35"></a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:imm38@cam.ac.uk">imm38@cam.ac.uk</a><br>Department of Engineering<br>Trumpington Street, Cambridge CB2 1PZ</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://scholar.google.com/citations?hl=en&user=56UwRyEAAAAJ">Google Scholar</a></li>
+          <li><a href="https://github.com/mandralis">GitHub</a></li>
+          <li><a href="https://mandralis.github.io/">Ioannis Mandralis</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

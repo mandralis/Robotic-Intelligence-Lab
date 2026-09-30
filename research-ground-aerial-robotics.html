@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ground-Aerial Morphing Robotics &middot; Mandralis Lab</title>
+  <meta name="description" content="Robots that fly and drive with the same body. We design morphobots that reuse one set of actuators across locomotion modes and transform in mid-air to land on their wheels, and we study the aerodynamics that make such transitions possible: ground effect close to touchdown, and rotor wake that can be">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+  <link rel="stylesheet" href="lab.css">
+  <script src="logos/logo.js" defer></script>
+</head>
+<body>
+<div class="frame">
+  <header class="site-header">
+    <div class="brand-row inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="logos/lift.svg" alt="" aria-hidden="true">
+        <span class="brand-text"><span class="brand-name">Mandralis Lab</span><span class="brand-sub">University of Cambridge</span></span>
+      </a>
+    </div>
+    <div class="navbar">
+      <nav class="nav inner" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="research.html" aria-current="page">Research</a>
+        <a href="people.html">People</a>
+        <a href="publications.html">Publications</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="openings.html">Openings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="inner">
+
+      <p class="crumbs"><a href="research.html">Research</a> <span>/</span> Featured research</p>
+      <h1>Ground-Aerial Morphing Robotics</h1>
+      <p class="lede">Robots that fly and drive with the same body. We design morphobots that reuse one set of actuators across locomotion modes and transform in mid-air to land on their wheels, and we study the aerodynamics that make such transitions possible: ground effect close to touchdown, and rotor wake that can be redirected rather than lost.</p>
+      <p class="coverage">In the media: <a href="https://www.youtube.com/watch?v=5w7pl7xQGKM">Caltech video</a> &middot; <a href="videos/IROS-demo-skyarabia-coverage.mp4">Sky News Arabia</a> &middot; <a href="videos/TII-demo-video.mp4">TII delivery demo</a></p>
+      <section class="paper" id="atmo">
+        <div class="paper-text">
+          <p class="paper-meta">Nature Communications Engineering &middot; 2025</p>
+          <h2 class="paper-title">ATMO: an aerially transforming morphobot for dynamic ground-aerial transition</h2>
+          <p class="paper-authors"><strong>I. Mandralis</strong>, R. Nemovi, A. Ramezani, R. M. Murray, M. Gharib</p>
+          <p>ATMO lands by changing shape in mid-air. Its four thrusters tilt during descent to become wheels, so the robot touches down already configured to drive. Close to the ground the air works in its favour: ground effect lets ATMO land at body postures beyond its thrusters' saturation limit.</p>
+          <p class="paper-links"><a href="https://doi.org/10.1038/s44172-025-00413-6">Paper</a> <a href="https://github.com/mandralis/ATMO">Code</a> <a href="https://www.caltech.edu/about/news/mid-air-transformation-helps-flying-rolling-robot-to-transition-smoothly">Caltech News</a> <a href="https://www.youtube.com/watch?v=5w7pl7xQGKM">Video</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig tall"><img src="images/featured/1a-i.jpg" alt="Composite of ATMO morphing in flight, transitioning, landing on its wheels and driving away" loading="lazy"><figcaption><strong>Morph, transition, land, drive.</strong> One continuous dynamic wheel landing, shown as a composite. ATMO folds its rotors inward as it descends and meets the floor as a ground vehicle; a model-predictive controller that adapts to body shape and ground proximity keeps it stable throughout.</figcaption></figure>
+          <figure class="fig"><img src="images/featured/1a-ii.jpg" alt="Diagrams of quadrotor flight, morphing flight and morpho-transition beside a photo of ATMO outdoors in drive mode" loading="lazy"><figcaption><strong>One set of actuators, two ways to move.</strong> The ducted rotors that lift ATMO are also its wheels. As the body folds from quadrotor flight through morphing flight to morpho-transition, the rotor wake turns outward and thrust is traded for a shape the robot can drive in.</figcaption></figure>
+        </div>
+      </section>
+      <section class="paper" id="wake-vectoring">
+        <div class="paper-text">
+          <p class="paper-meta">Under Review &middot; 2025</p>
+          <h2 class="paper-title">Wake vectoring for efficient morphing flight</h2>
+          <p class="paper-authors"><strong>I. Mandralis</strong>, S. Schumacher, M. Gharib</p>
+          <p>Tilting a rotor to change shape costs lift. Deflectors built into ATMO's frame intercept the rotor wake and turn it back toward the ground, recovering up to 40% of vertical thrust in configurations that would otherwise produce almost none, with no added motors or electronics.</p>
+          <p class="paper-links"><a href="https://arxiv.org/abs/2512.05211">arXiv</a> <a href="https://github.com/mandralis/DeflectorWithActuatorDisk">Code</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig tall"><img src="images/featured/1b-i.jpg" alt="ATMO hovering indoors with its thrusters tilted to 72 degrees" loading="lazy"><figcaption><strong>Hovering at &phi; = 72&deg;.</strong> With its thrusters tilted most of the way toward drive mode, ATMO holds a stable hover on thrust that its deflectors redirect downward, and can take off from drive configuration and hop to a new location.</figcaption></figure>
+          <figure class="fig"><img src="images/featured/1b-ii.jpg" alt="Close-up of ATMO with its carbon frame and internal wake deflectors labelled" loading="lazy"><figcaption><strong>Passive by design.</strong> Curved deflectors inside the frame sit in the path of the rotor wake. The idea is borrowed from the vectoring nozzles of rockets and jump jets, here realised with no moving parts.</figcaption></figure>
+        </div>
+      </section>
+      <section class="paper" id="bounding-flight">
+        <div class="paper-text">
+          <p class="paper-meta">ECC &middot; 2023</p>
+          <h2 class="paper-title">Minimum time trajectory generation for bounding flight: combining posture control and thrust vectoring</h2>
+          <p class="paper-authors"><strong>I. Mandralis</strong>, E. Sihite, A. Ramezani, M. Gharib</p>
+          <p>Birds bound: they tuck their wings mid-flight, changing both their aerodynamics and their inertia at once. We pose that idea as an optimal control problem for an aerial robot with articulated thrusters and solve it by trapezoidal collocation. Coupling posture control with thrust vectoring opens paths through narrow, changing geometries and shortens the time a manoeuvre takes.</p>
+          <p class="paper-links"><a href="https://ieeexplore.ieee.org/document/10178360">Paper</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig"><img src="images/featured/1c-i.jpg" alt="Minimum-time trajectories of a morphing aerial robot with and without posture control, shown as snapshot sequences" loading="lazy"><figcaption><strong>Folding the body to fly faster.</strong> Snapshots of minimum-time trajectories, with the body shape held fixed and with it controlled. Using posture lets the robot thread passages that are otherwise too tight, and reach the end of the manoeuvre sooner.</figcaption></figure>
+        </div>
+      </section>
+      <section class="paper" id="tii-delivery">
+        <div class="paper-text">
+          <p class="paper-meta">Field demonstration, Abu Dhabi &middot; 2024</p>
+          <h2 class="paper-title">ATMO in the field: outdoor package delivery with TII</h2>
+          
+          <p>We built a second ATMO for our collaborators at the Technology Innovation Institute in Abu Dhabi and ran it outdoors on a package delivery mission: fly to the drop point, transform close to the ground, land on the wheels and drive the last stretch. The robot was also presented at IROS 2024 in Abu Dhabi, where it was covered by Sky News Arabia.</p>
+          <p class="paper-links"><a href="videos/IROS-demo-skyarabia-coverage.mp4">Media coverage</a></p>
+        </div>
+        <div class="paper-figs">
+          <figure class="fig"><video src="videos/TII-demo-video.mp4" poster="images/tii-poster.jpg" controls preload="none" playsinline></video><figcaption><strong>Delivery, end to end.</strong> Flight, mid-air transformation, landing on the wheels and the final drive to the doorstep, filmed by the TII media team.</figcaption></figure>
+          <figure class="fig"><img src="images/featured/1d-i.jpg" alt="The second ATMO robot: a white chassis on four large wheel-thrusters, marked Caltech" loading="lazy"><figcaption><strong>The field build.</strong> The ATMO built with TII for outdoor missions, carrying its avionics and battery in the body above four wheel-thrusters that serve as rotors in the air and wheels on the ground.</figcaption></figure>
+        </div>
+      </section>
+      <p class="more-dirs"><span>More research</span> <a href="research-learning-based-control.html">Learning-Based Control</a> &middot; <a href="research-fluid-body-interaction.html">Fluid-Body Interaction and Flow Control</a> &middot; <a href="research-vision-based-navigation.html">Vision-Based Navigation and Manipulation</a></p>
+
+  </main>
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="foot-brand">
+        <p class="lab">Mandralis Lab</p>
+        <a class="uni-logo" href="https://www.eng.cam.ac.uk/"><img src="media/cambridge-logo.png" alt="University of Cambridge" width="174" height="35"></a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:imm38@cam.ac.uk">imm38@cam.ac.uk</a><br>Department of Engineering<br>Trumpington Street, Cambridge CB2 1PZ</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://scholar.google.com/citations?hl=en&user=56UwRyEAAAAJ">Google Scholar</a></li>
+          <li><a href="https://github.com/mandralis">GitHub</a></li>
+          <li><a href="https://mandralis.github.io/">Ioannis Mandralis</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
