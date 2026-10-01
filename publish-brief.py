@@ -92,10 +92,19 @@ def desk_projects():
     out = []
     if not os.path.isdir(PROJECTS_ROOT):
         return out
+    names = []
     for name in sorted(os.listdir(PROJECTS_ROOT), reverse=True):
+        if name.startswith(".") or not os.path.isdir(os.path.join(PROJECTS_ROOT, name)):
+            continue
+        names.append(name)
+        # subprojects live one level down, inside their project's folder
+        for sub in sorted(os.listdir(os.path.join(PROJECTS_ROOT, name))):
+            if not sub.startswith(".") and os.path.isdir(os.path.join(PROJECTS_ROOT, name, sub)):
+                names.append(os.path.join(name, sub))
+    for name in names:
         folder = os.path.join(PROJECTS_ROOT, name)
         meta_path = os.path.join(folder, "brief.json")
-        if name.startswith(".") or not os.path.isfile(meta_path):
+        if not os.path.isfile(meta_path):
             continue
         try:
             with open(meta_path, encoding="utf-8") as fh:
@@ -365,7 +374,10 @@ def interactive_publish():
             tag = "  [on site: %s]" % published[p["brief"]["id"]]["direction"]
         if not p["has_pdf"]:
             tag += "  [no PDF yet]"
-        labels.append("%s  (%s)%s" % (m.get("title") or os.path.basename(p["folder"]), m.get("kind") or "brief", tag))
+        name = m.get("title") or os.path.basename(p["folder"])
+        if p["brief"].get("parent") and m.get("subtitle"):
+            name = "   -> " + m["subtitle"]
+        labels.append("%s  (%s)%s" % (name, m.get("kind") or "brief", tag))
     i = choose("Which project?", labels)
     if i is None:
         return
