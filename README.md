@@ -5,15 +5,15 @@ It has no dependencies and no build step, and shares no code with the personal s
 
 ## Going live (GitHub Pages)
 
-The site is published straight from this repository (github.com/mandralis/robotic-intelligence-lab):
+The site is published straight from this repository (github.com/mandralis/Robotic-Intelligence-Lab):
 GitHub Pages serves the `main` branch as it is, with no build step (`.nojekyll` turns Jekyll off).
 
-- Address: **https://mandralis.github.io/robotic-intelligence-lab/**
+- Address: **https://mandralis.github.io/Robotic-Intelligence-Lab/**
 - One-time setup: on GitHub, open the repository's **Settings → Pages**, set **Source** to
   "Deploy from a branch", pick **main** and **/ (root)**, and save. The repository must be public
   (Pages on private repositories needs a paid plan).
 - After that, every `git push` to `main` updates the site within a minute or two.
-- All links between pages are relative, so the site works both under `/robotic-intelligence-lab/` and on a
+- All links between pages are relative, so the site works both under `/Robotic-Intelligence-Lab/` (the path is case-sensitive) and on a
   custom domain later (add a `CNAME` file with the domain and point its DNS at GitHub).
 
 ## Preview
