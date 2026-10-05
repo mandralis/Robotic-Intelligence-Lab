@@ -19,6 +19,7 @@ openings.html (the Student projects section). Running it again is always safe.
 The same actions without the menu:
 
     python3 publish-brief.py --publish "Visuomotor" --direction aerial-manipulation
+    python3 publish-brief.py --publish "Positions" --direction aerial-manipulation,multimodal-design
     python3 publish-brief.py --refresh      # re-copy every PDF after editing briefs
     python3 publish-brief.py --list
     python3 publish-brief.py --remove <slug>
@@ -80,6 +81,22 @@ def save_registry(entries):
     with open(REGISTRY, "w", encoding="utf-8") as fh:
         json.dump(entries, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
+
+
+def dirs_of(entry):
+    """The direction ids a brief is listed under (one, or a list of several)."""
+    d = entry.get("direction") or []
+    return [d] if isinstance(d, str) else list(d)
+
+
+def pack_dirs(ids):
+    """Store one direction as a plain string, several as a list."""
+    ids = [d for i, d in enumerate(ids) if d and d not in ids[:i]]
+    return ids[0] if len(ids) == 1 else ids
+
+
+def dir_titles(entry, titles):
+    return " + ".join(titles.get(d, d) for d in dirs_of(entry))
 
 
 def is_open(entry):
@@ -226,7 +243,9 @@ def when_text(entry):
 
 
 def li(entry, prefix=""):
-    lead = ", ".join(x for x in (entry.get("kind"), when_text(entry)) if x)
+    lead = entry.get("lead")
+    if lead is None:
+        lead = ", ".join(x for x in (entry.get("kind"), when_text(entry)) if x)
     text = prefix + (lead + ". " if lead else "") + (entry.get("blurb") or "")
     return ('          <li class="og-brief"><span class="og-status">%s</span>'
             '<a href="projects/%s.pdf" target="_blank" rel="noopener">%s'
@@ -253,17 +272,19 @@ def render(entries):
     for m in DIR_RE.finditer(page):
         known.append((m.group(1), html.unescape(re.sub(r"<[^>]+>", "", m.group(2))).strip()))
     for did, _ in known:
-        page = replace_block(page, did, [li(e) for e in entries if e.get("direction") == did])
+        page = replace_block(page, did, [li(e) for e in entries if did in dirs_of(e)])
     write(RESEARCH, page)
 
     if os.path.exists(OPENINGS):
         titles = dict(known)
         order = [d for d, _ in known]
         open_ones = sorted([e for e in entries if is_open(e)],
-                           key=lambda e: order.index(e["direction"]) if e["direction"] in order else 99)
+                           key=lambda e: min([order.index(d) for d in dirs_of(e) if d in order] or [99]))
         if open_ones:
             rows = ['          <ul class="ongoing">']
-            rows += [li(e, prefix=(titles.get(e["direction"], "") + ". ") if titles.get(e["direction"]) else "")
+            # a brief listed under one direction is prefixed with it; general ones are not
+            rows += [li(e, prefix=(titles[dirs_of(e)[0]] + ". ")
+                        if len(dirs_of(e)) == 1 and dirs_of(e)[0] in titles else "")
                      for e in open_ones]
             rows += ["          </ul>"]
         else:
@@ -271,7 +292,7 @@ def render(entries):
         page = read(OPENINGS)
         page = replace_block(page, "openings", [r[2:] if r.lstrip().startswith("<li") else r[4:] for r in rows])
         write(OPENINGS, page)
-    orphans = [e["slug"] for e in entries if e.get("direction") not in dict(known)]
+    orphans = [e["slug"] for e in entries if any(d not in dict(known) for d in dirs_of(e))]
     for s in orphans:
         print("  ! %s points at a direction that is no longer on research.html" % s)
 
@@ -293,11 +314,13 @@ def publish(folder, direction, status=None, blurb=None):
         "kind": meta.get("kind", ""),
         "start": meta.get("start", ""),
         "deadline": meta.get("deadline", ""),
-        "direction": direction,
+        "direction": pack_dirs([direction] if isinstance(direction, str) else list(direction)),
         "status": status or old.get("status") or DEFAULT_STATUS,
         "blurb": blurb if blurb is not None else (old.get("blurb") or first_sentence(meta.get("summary"))),
         "source": os.path.relpath(folder, HERE),
     }
+    if "lead" in old:  # hand-set lead text ("Master's theses, from January 2027") survives updates
+        entry["lead"] = old["lead"]
     entries = [x for x in entries if x.get("slug") != entry["slug"]] + [entry]
     copy_pdf(entry)
     save_registry(entries)
@@ -355,6 +378,23 @@ def choose(title, options, allow_back=True):
         print("  Type a number from the list.")
 
 
+def choose_many(title, options, current=()):
+    """Like choose, but accepts several numbers ("1,2"); returns a list of indexes, or None."""
+    print("\n" + title + "  (one number, or several separated by commas)")
+    for i, opt in enumerate(options, 1):
+        print("  %2d  %s" % (i, opt))
+    print("   0  Back")
+    default = ",".join(str(i + 1) for i in current)
+    while True:
+        got = ask("Choose", default)
+        if got in ("0", "b", "q"):
+            return None
+        parts = [x.strip() for x in got.split(",") if x.strip()]
+        if parts and all(x.isdigit() and 1 <= int(x) <= len(options) for x in parts):
+            return sorted(set(int(x) - 1 for x in parts))
+        print("  Type a number from the list, or several separated by commas.")
+
+
 def yes(prompt, default=True):
     got = ask(prompt + (" (Y/n)" if default else " (y/N)")).lower()
     return default if not got else got.startswith("y")
@@ -371,7 +411,7 @@ def interactive_publish():
         m = p["brief"].get("meta", {})
         tag = ""
         if p["brief"].get("id") in published:
-            tag = "  [on site: %s]" % published[p["brief"]["id"]]["direction"]
+            tag = "  [on site: %s]" % ", ".join(dirs_of(published[p["brief"]["id"]]))
         if not p["has_pdf"]:
             tag += "  [no PDF yet]"
         name = m.get("title") or os.path.basename(p["folder"])
@@ -388,19 +428,20 @@ def interactive_publish():
     old = published.get(proj["brief"].get("id"), {})
 
     dirs = directions()
-    opts = [t + ("   (current)" if old.get("direction") == d else "") for d, t in dirs] + ["+ New direction..."]
-    j = choose("List it under which direction?", opts)
-    if j is None:
+    opts = [t + ("   (current)" if d in dirs_of(old) else "") for d, t in dirs] + ["+ New direction..."]
+    picked = choose_many("List it under which direction(s)?", opts,
+                         [i for i, (d, _) in enumerate(dirs) if d in dirs_of(old)])
+    if picked is None:
         return
-    if j == len(dirs):
+    direction = [dirs[j][0] for j in picked if j < len(dirs)]
+    if len(dirs) in picked:
         title = ask("Title of the new direction")
         if not title:
             return
         desc = ask("One-paragraph description (optional, Enter to skip)")
-        direction = add_direction(title, desc)
+        direction.append(add_direction(title, desc))
         print("  Added \"%s\" to research.html" % title)
-    else:
-        direction = dirs[j][0]
+        dirs = directions()
 
     meta = proj["brief"].get("meta", {})
     status = ask("Label", old.get("status") or DEFAULT_STATUS)
@@ -408,7 +449,7 @@ def interactive_publish():
     print("\nDescription shown on the site (Enter keeps it):\n  " + default_blurb)
     blurb = ask("New description") or default_blurb
 
-    print("\n  %s\n  under: %s\n  label: %s" % (meta.get("title"), dict(dirs).get(direction, direction), status))
+    print("\n  %s\n  under: %s\n  label: %s" % (meta.get("title"), dir_titles({"direction": direction}, dict(dirs)), status))
     if not yes("Publish?"):
         return
     entry = publish(proj["folder"], direction, status, blurb)
@@ -420,7 +461,7 @@ def interactive_remove():
     if not entries:
         print("  Nothing is published.")
         return
-    i = choose("Take which brief off the site?", ["%s  [%s]" % (e["title"], e["direction"]) for e in entries])
+    i = choose("Take which brief off the site?", ["%s  [%s]" % (e["title"], ", ".join(dirs_of(e))) for e in entries])
     if i is None:
         return
     if yes("Remove \"%s\"?" % entries[i]["title"], default=False):
@@ -433,15 +474,16 @@ def interactive_move():
     if not entries:
         print("  Nothing is published.")
         return
-    i = choose("Which brief?", ["%s  [%s, %s]" % (e["title"], e["direction"], e.get("status")) for e in entries])
+    i = choose("Which brief?", ["%s  [%s; %s]" % (e["title"], ", ".join(dirs_of(e)), e.get("status")) for e in entries])
     if i is None:
         return
     e = entries[i]
     dirs = directions()
-    j = choose("Move to which direction?", [t for _, t in dirs] + ["(keep %s)" % e["direction"]])
-    if j is None:
+    picked = choose_many("List it under which direction(s)?", [t for _, t in dirs],
+                         [i for i, (d, _) in enumerate(dirs) if d in dirs_of(e)])
+    if picked is None:
         return
-    direction = e["direction"] if j == len(dirs) else dirs[j][0]
+    direction = [dirs[j][0] for j in picked]
     status = ask("Label (e.g. Open project, Filled, In progress)", e.get("status") or DEFAULT_STATUS)
     publish(source_path(e), direction, status, e.get("blurb"))
     print("  Updated.")
@@ -454,7 +496,7 @@ def show_list():
     titles = dict(directions())
     for e in entries:
         print("  - %s\n      %s | %s | projects/%s.pdf" % (
-            e["title"], titles.get(e["direction"], e["direction"]), e.get("status"), e["slug"]))
+            e["title"], dir_titles(e, titles), e.get("status"), e["slug"]))
 
 
 def menu():
@@ -481,7 +523,7 @@ def menu():
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--publish", metavar="PROJECT", help="Project Desk folder or title (or part of it)")
-    ap.add_argument("--direction", help="direction id on research.html (see --list)")
+    ap.add_argument("--direction", help="direction id(s) on research.html, comma-separated for several (see --list)")
     ap.add_argument("--status", help='label, e.g. "Open project" or "Filled"')
     ap.add_argument("--blurb", help="description for the website")
     ap.add_argument("--remove", metavar="SLUG")
@@ -499,9 +541,10 @@ def main():
         print("Refreshed %d brief(s)" % refresh())
     elif a.publish:
         ids = [d for d, _ in directions()]
-        direction = a.direction or ids[0]
-        if direction not in ids:
-            sys.exit("Unknown direction %r. Known: %s" % (direction, ", ".join(ids)))
+        direction = [d.strip() for d in (a.direction or ids[0]).split(",") if d.strip()]
+        unknown = [d for d in direction if d not in ids]
+        if unknown:
+            sys.exit("Unknown direction %r. Known: %s" % (", ".join(unknown), ", ".join(ids)))
         e = publish(find_folder(a.publish), direction, a.status, a.blurb)
         print("Published %s -> projects/%s.pdf" % (e["title"], e["slug"]))
     else:

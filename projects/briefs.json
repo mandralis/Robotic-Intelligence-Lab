@@ -1,14 +1,18 @@
 [
   {
-    "id": "v8etbzg",
-    "slug": "visuomotor-cooperative-manipulation-with-teams-of-quadrotors",
-    "title": "Visuomotor Cooperative Manipulation with Teams of Quadrotors",
-    "kind": "Master's thesis",
-    "start": "January 2027",
-    "deadline": "July 2027",
-    "direction": "aerial-manipulation",
-    "status": "Open project",
-    "blurb": "Teams of two or three quadrotors that grasp, lift and reorient unknown objects using only onboard sensing, combining pretrained visuomotor policies with reinforcement learning and control theory. Starts with a single quadrotor and gripper.",
-    "source": "../../Projects/2026-09-22 Master's thesis Visuomotor Cooperative Manipulation With Teams of Quadrotors"
+    "id": "mtpos27",
+    "slug": "student-project-positions-in-robot-learning",
+    "title": "Student Project Positions in Robot Learning",
+    "kind": "Thesis or student",
+    "start": "January 2027 or later",
+    "deadline": "Set by the student's programme",
+    "direction": [
+      "aerial-manipulation",
+      "multimodal-design"
+    ],
+    "status": "Open positions",
+    "blurb": "Several open positions for Cambridge and visiting students, starting from January 2027. Topics are defined together with each student, broadly within general-purpose robot manipulation, vision-language-action models, diffusion policies, imitation learning, reinforcement learning, robot collaboration and aerial manipulation.",
+    "source": "../../Projects/2026-10-05 Thesis or student Student Project Positions in Robot Learning",
+    "lead": "Master's theses and student projects"
   }
 ]

@@ -112,6 +112,7 @@ ul.students li:first-child { border-top: 1px solid var(--rule); }
 .s-name { color: var(--ink); font-weight: 600; font-size: 16.5px; }
 .s-name small { display: block; font-weight: 400; font-size: 14px; color: var(--muted); margin-top: 1px; }
 .s-work { color: var(--text); font-size: 15.5px; }
+.s-work small { display: block; font-size: 14px; color: var(--muted); margin-top: 1px; }
 .s-work em { display: block; font-style: normal; font-size: 14px; color: var(--warm); margin-top: 1px; }
 
 /* ==========================================================================
