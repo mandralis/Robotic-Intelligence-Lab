@@ -16,7 +16,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 http.server.ThreadingHTTPServer.allow_reuse_address = True
 with http.server.ThreadingHTTPServer(("", PORT), functools.partial(Handler, directory=ROOT)) as httpd:
-    print(f"\n  Mandralis Lab:  http://localhost:{PORT}/\n\n  (Cmd-click the link to open it; Ctrl-C to stop)\n", flush=True)
+    print(f"\n  Robotic Intelligence Lab:  http://localhost:{PORT}/\n\n  (Cmd-click the link to open it; Ctrl-C to stop)\n", flush=True)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

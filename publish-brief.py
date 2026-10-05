@@ -500,7 +500,7 @@ def show_list():
 
 
 def menu():
-    print("Publish brief: Mandralis Lab website")
+    print("Publish brief: Robotic Intelligence Lab website")
     actions = [
         ("Publish or update a project brief", interactive_publish),
         ("Change the direction or label of a published brief", interactive_move),

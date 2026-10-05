@@ -1,19 +1,19 @@
-# Mandralis Lab website
+# Robotic Intelligence Lab website
 
 A plain static site: every page is an ordinary HTML file in this folder.
 It has no dependencies and no build step, and shares no code with the personal site (mandralis.github.io).
 
 ## Going live (GitHub Pages)
 
-The site is published straight from this repository (github.com/mandralis/mandralis-lab):
+The site is published straight from this repository (github.com/mandralis/robotic-intelligence-lab):
 GitHub Pages serves the `main` branch as it is, with no build step (`.nojekyll` turns Jekyll off).
 
-- Address: **https://mandralis.github.io/mandralis-lab/**
+- Address: **https://mandralis.github.io/robotic-intelligence-lab/**
 - One-time setup: on GitHub, open the repository's **Settings → Pages**, set **Source** to
   "Deploy from a branch", pick **main** and **/ (root)**, and save. The repository must be public
   (Pages on private repositories needs a paid plan).
 - After that, every `git push` to `main` updates the site within a minute or two.
-- All links between pages are relative, so the site works both under `/mandralis-lab/` and on a
+- All links between pages are relative, so the site works both under `/robotic-intelligence-lab/` and on a
   custom domain later (add a `CNAME` file with the domain and point its DNS at GitHub).
 
 ## Preview

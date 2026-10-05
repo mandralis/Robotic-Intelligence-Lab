@@ -1,8 +1,8 @@
-# Mandralis Lab logo options
+# Robotic Intelligence Lab logo options
 
 All marks share one visual language: open circles are agents or variables,
 the solid circle is what they share or produce. Each SVG is cropped tightly
-to its drawing, so it lines up exactly with the top of "Mandralis Lab" and the
+to its drawing, so it lines up exactly with the top of the lab name and the
 bottom of "University of Cambridge" in the header.
 
 | File | Idea |
