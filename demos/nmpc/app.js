@@ -123,10 +123,7 @@
     const cw = 0.42, ch = 0.15, r = 0.06;
     ctx.globalAlpha = alpha;
     // cart
-    if (ghost) {
-      ctx.strokeStyle = C.muted; ctx.lineWidth = 1;
-      ctx.strokeRect(X(P[0] - cw / 2), Y(ch / 2), cw * scale, ch * scale);
-    } else {
+    if (!ghost) {   // planned poses are drawn without the cart, which would otherwise outline the real one
       ctx.fillStyle = C.ink;
       roundRect(X(P[0] - cw / 2), Y(ch / 2), cw * scale, ch * scale, 0.025 * scale); ctx.fill();
       ctx.fillStyle = "#fff";
