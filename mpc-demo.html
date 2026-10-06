@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Model Predictive Control Demo &middot; Robotic Intelligence Lab</title>
+  <meta name="description" content="An interactive nonlinear model predictive controller that swings up and balances a double inverted pendulum on a cart, live in your browser. Push it and watch it recover.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+  <link rel="stylesheet" href="lab.css">
+  <link rel="stylesheet" href="demos/nmpc/demo.css">
+  <script src="logos/logo.js" defer></script>
+  <script src="demos/nmpc/nmpc.js" defer></script>
+  <script src="demos/nmpc/app.js" defer></script>
+  <link rel="stylesheet" href="demos/nmpc/katex/katex.min.css">
+  <script src="demos/nmpc/katex/katex.min.js" defer></script>
+  <script src="demos/nmpc/katex/contrib/auto-render.min.js" defer
+    onload="renderMathInElement(document.querySelector('main'), {delimiters: [{left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}], throwOnError: false})"></script>
+  <meta property="og:image" content="images/teaching/nmpc-demo.png">
+</head>
+<body>
+<div class="frame">
+  <header class="site-header">
+    <div class="brand-row inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="logos/lift.svg" alt="" aria-hidden="true">
+        <span class="brand-text"><span class="brand-name">Robotic Intelligence Lab</span><span class="brand-sub">University of Cambridge</span></span>
+      </a>
+    </div>
+    <div class="navbar">
+      <nav class="nav inner" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="people.html">People</a>
+        <a href="publications.html">Publications</a>
+        <a href="teaching.html" aria-current="page">Teaching</a>
+        <a href="openings.html">Openings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="inner">
+
+      <p class="crumbs"><a href="teaching.html">Teaching</a> <span>/</span> Interactive demo</p>
+      <h1>Model predictive control, interactively</h1>
+      <p class="lede">
+        A double pendulum on a cart, swung up and balanced by a nonlinear model predictive controller running live in the browser. Grab it, push it, and watch how the controller re-plans and recovers from disturbances.
+      </p>
+
+      <section class="mpc-demo" id="demo" aria-label="Interactive simulation">
+        <div class="mpc-stage">
+          <canvas id="mpc-canvas" role="img" aria-label="Animated cart carrying a two-link pendulum. The controller swings the pendulum up and keeps it balanced. Drag a ball or click to push it."></canvas>
+          <div class="mpc-status" aria-live="polite"><span class="dot"></span><span id="mpc-status-text">Ready</span></div>
+          <div class="mpc-hint" id="mpc-hint">Drag a ball to pull it &middot; click anywhere to push</div>
+        </div>
+        <div class="mpc-chart">
+          <canvas id="mpc-chart" aria-hidden="true"></canvas>
+        </div>
+        <div class="mpc-toolbar">
+          <div class="mpc-buttons">
+            <button type="button" data-act="reset" title="Hang it straight down and let the controller swing it up (R)">&#8634; Hang &amp; swing up</button>
+            <button type="button" data-act="nudge-left" title="Small push to the left (&larr;)">&larr; Nudge</button>
+            <button type="button" data-act="nudge-right" title="Small push to the right (&rarr;)">Nudge &rarr;</button>
+            <button type="button" data-act="shove" title="A hard shove on the upper ball (Shift + arrow)">Big shove</button>
+            <button type="button" data-act="pause" id="mpc-pause" title="Pause or resume (Space)">Pause</button>
+          </div>
+          <div class="mpc-toggles">
+            <label><input type="checkbox" id="mpc-show-plan" checked> Show the plan</label>
+            <label><input type="checkbox" id="mpc-ctrl-on" checked> Controller on</label>
+          </div>
+        </div>
+        <p class="mpc-readout">
+          <span><b id="mpc-solve">&ndash;</b> ms per plan</span>
+          <span><b>40</b> new plans per second</span>
+          <span>looking <b>1.5 s</b> ahead</span>
+          <span>force <b id="mpc-force">0</b> N <small>of &plusmn;200</small></span>
+        </p>
+      </section>
+
+      <h2>Model predictive control</h2>
+      <p>
+        Model predictive control (MPC), also called <em>receding horizon control</em>, turns an optimal control
+        problem into a feedback law. At each sampling instant \(t_i\) the controller
+      </p>
+      <ol class="mpc-loop">
+        <li><span class="n">1</span><div>measures the current state \(x(t_i)\): the cart position, both link angles, and their rates;</div></li>
+        <li><span class="n">2</span><div>computes the input trajectory that minimises a cost over a finite horizon \([t_i,\, t_i+T]\), using a model \(\dot x = f(x,u)\) to predict the motion and respecting the input limits;</div></li>
+        <li><span class="n">3</span><div>applies that input only over the first interval \([t_i,\, t_i+\Delta T]\), then repeats from the new measured state.</div></li>
+      </ol>
+      <p>
+        Each plan on its own is open loop. Feedback comes from re-solving the problem from the measured state.
+        That is why the controller recovers from pushes it was never told about, and tolerates errors in its own model.
+        Because the model and the constraints are used directly, the same controller swings the pendulum up from hanging
+        and balances it at the top. In the demo \(T = 1.5\)&nbsp;s and \(\Delta T = 25\)&nbsp;ms. The faded pendulums show the current
+        optimal trajectory \(x^*(\tau)\), \(\tau \in [t_i, t_i+T]\); toggle <em>Show the plan</em> to hide them.
+      </p>
+
+      <h2>The mathematics</h2>
+
+      <h3>Model</h3>
+      <p>
+        Let \(q = (p, \theta_1, \theta_2)\) be the cart position and the absolute link angles measured from the upright
+        vertical, and \(x = (q, \dot q) \in \mathbb{R}^6\). The cart has mass \(m_c = 10\)&nbsp;kg, and point masses
+        \(m_1 = m_2 = 1\)&nbsp;kg sit at the ends of massless links of length \(l_1 = l_2 = 0.5\)&nbsp;m. The Euler&ndash;Lagrange equations give
+      </p>
+      \[
+        M(q)\,\ddot q = h(q,\dot q) + e_1 u, \qquad
+        M(q) = \begin{bmatrix}
+          m_c + m_1 + m_2 & (m_1+m_2) l_1 \cos\theta_1 & m_2 l_2 \cos\theta_2 \\
+          (m_1+m_2) l_1 \cos\theta_1 & (m_1+m_2) l_1^2 & m_2 l_1 l_2 \cos(\theta_1-\theta_2) \\
+          m_2 l_2 \cos\theta_2 & m_2 l_1 l_2 \cos(\theta_1-\theta_2) & m_2 l_2^2
+        \end{bmatrix},
+      \]
+      \[
+        h(q,\dot q) = \begin{bmatrix}
+          (m_1+m_2) l_1 \dot\theta_1^2 \sin\theta_1 + m_2 l_2 \dot\theta_2^2 \sin\theta_2 - c_1 \dot p \\
+          -m_2 l_1 l_2 \dot\theta_2^2 \sin(\theta_1-\theta_2) + (m_1+m_2) g\, l_1 \sin\theta_1 - c_2 \dot\theta_1 \\
+          \phantom{-}m_2 l_1 l_2 \dot\theta_1^2 \sin(\theta_1-\theta_2) + m_2 g\, l_2 \sin\theta_2 - c_3 \dot\theta_2
+        \end{bmatrix},
+      \]
+      <p>
+        where \(u\) is the horizontal force on the cart, \(c_j\) are small viscous friction coefficients and
+        \(e_1 = (1,0,0)\). Since \(M(q) \succ 0\), this gives the state-space model
+        \(\dot x = f(x,u) = \big(\dot q,\; M(q)^{-1}(h(q,\dot q) + e_1 u)\big)\) with
+        \(u \in \mathcal{U} = [-200, 200]\)&nbsp;N. Both equilibria, upright \(x = 0\) and hanging \(\theta_1 = \theta_2 = \pi\), have \(u = 0\).
+        A push on the pendulum enters as the generalised force \(J(q)^{\mathsf T} F\), where \(J\) is the Jacobian of the pushed mass&rsquo;s position.
+      </p>
+
+      <h3>The receding horizon problem</h3>
+      <p>At each \(t_i = i\,\Delta T\) the controller solves</p>
+      \[
+      \begin{aligned}
+        u_{[t_i,\, t_i+\Delta T]} = \arg\min_{(x,u)} \;& \int_{t_i}^{t_i+T} L(x,u)\, d\tau \;+\; V\big(x(t_i+T)\big) \\
+        \text{subject to}\;\; & x(t_i) = \text{current state}, \\
+        & \dot x = f(x,u), \qquad u \in \mathcal U, \\
+        & g(x) = |p| - p_{\max} \le 0,
+      \end{aligned}
+      \]
+      <p>with trajectory and terminal costs</p>
+      \[
+        L(x,u) = p^2 + q_\theta \sum_{j=1}^{2} \big(1-\cos\theta_j\big) + q_v \,\lVert \dot q \rVert^2 + Q_u u^2,
+        \qquad V(x) = \gamma \, L(x, 0),
+      \]
+      <p>
+        with \(q_\theta = 12\), \(q_v = 0.05\), \(Q_u = 2\cdot 10^{-4}\), \(\gamma = 10\), \(T = 1.5\)&nbsp;s and \(p_{\max} = 1.5\)&nbsp;m.
+        Near the upright equilibrium, \(L(x,u) \approx x^{\mathsf T} Q_x x + u^{\mathsf T} Q_u u\) with
+        \(Q_x = \operatorname{diag}(1, 6, 6, 0.05, 0.05, 0.05)\), the familiar LQR weights. Away from it the cosine terms make
+        \(L\) periodic in each angle, so every upright configuration \(\theta_j \in 2\pi\mathbb Z\) is a minimiser. After a push
+        that sends a link over the top, the controller catches it at the next upright position instead of unwinding a full turn.
+        The track constraint is softened with a slack \(s \ge 0\), \(|p| \le p_{\max} + s\), penalised by \(\rho s^2\) with \(\rho = 4000\),
+        so the problem stays feasible after a large disturbance.
+      </p>
+
+      <h3>From optimal control to a nonlinear program</h3>
+      <p>
+        The problem above is infinite dimensional. We transcribe it with <em>direct multiple shooting</em> on the grid
+        \(t_i = \tau_0 < \tau_1 < \dots < \tau_N = t_i + T\), \(\tau_{k+1} - \tau_k = h\), with \(N = 60\) and \(h = \Delta T = 25\)&nbsp;ms.
+        The input is piecewise constant, \(u(\tau) = u_k\) on \([\tau_k, \tau_{k+1})\). Over each interval the dynamics are
+        integrated by one step of the classical Runge&ndash;Kutta method,
+      </p>
+      \[
+        \Phi_h(x,u) = x + \tfrac{h}{6}\,(k_1 + 2k_2 + 2k_3 + k_4), \quad
+        k_1 = f(x,u),\; k_2 = f(x + \tfrac h2 k_1, u),\; k_3 = f(x + \tfrac h2 k_2, u),\; k_4 = f(x + h k_3, u).
+      \]
+      <p>
+        The states at the grid points are kept as decision variables, \(\xi = (x_0, u_0, x_1, u_1, \dots, u_{N-1}, x_N, s_0, \dots, s_N) \in \mathbb{R}^M\) with
+        \(M = 7N + 6 + (N+1) = 487\), and we solve the nonlinear program
+      </p>
+      \[
+      \begin{aligned}
+        \min_{\xi \in \mathbb{R}^M} \;\; & F(\xi) = \sum_{k=0}^{N-1} h\,\big(L(x_k, u_k) + \rho s_k^2\big) + V(x_N) + \rho s_N^2 \\
+        \text{subject to}\;\; & x_0 - x(t_i) = 0, \\
+        & x_{k+1} - \Phi_h(x_k, u_k) = 0, \qquad k = 0, \dots, N-1, \\
+        & lb \le c(\xi) \le ub: \quad |u_k| \le 200, \;\; |p_k| \le p_{\max} + s_k, \;\; s_k \ge 0 .
+      \end{aligned}
+      \]
+      <p>
+        The equality constraints are the &ldquo;gap-closing&rdquo; conditions: they force the end of each integrated interval to
+        meet the start of the next. This sits between the two methods described in Murray&rsquo;s chapter on receding horizon control.
+        <em>Single shooting</em> optimises over \(u_0,\dots,u_{N-1}\) alone and integrates across the whole horizon, so for an unstable
+        system a small change in an early input is amplified exponentially by the time it reaches the end, and the problem is badly conditioned.
+        <em>Direct collocation</em> keeps the states as variables too, but represents them by polynomials and imposes
+        \(\dot{\tilde x} = f(\tilde x, \tilde u)\) at collocation points. Multiple shooting keeps the states as variables, which gives the good
+        conditioning of collocation, and uses an accurate integrator inside each interval. In both cases the Jacobian of the constraints
+        is block banded, and sparse solvers exploit this.
+      </p>
+
+      <h3>Solving it</h3>
+      <p>
+        <strong>In Python</strong> (the companion repository) the NLP is written in
+        <a href="https://web.casadi.org/">CasADi</a>, which supplies exact first and second derivatives by algorithmic differentiation,
+        and solved with IPOPT, a primal&ndash;dual interior-point method that takes Newton steps on the perturbed KKT conditions.
+        Between sampling instants the previous solution, shifted by one interval,
+        \(\xi^{\text{init}} = (x_1, u_1, \dots, x_N, u_{N-1}, x_N)\), is used as the initial guess.
+      </p>
+      <p>
+        <strong>In the browser</strong> the same problem is solved with control-limited <em>iterative LQR</em>, a Gauss&ndash;Newton
+        variant of differential dynamic programming that eliminates the states through the dynamics and solves a sequence of
+        time-varying LQR problems. Given a nominal trajectory \((\bar x_k, \bar u_k)\), linearise
+        \(\delta x_{k+1} = A_k\,\delta x_k + B_k\,\delta u_k\), with \(A_k = \partial \Phi_h/\partial x\) and \(B_k = \partial\Phi_h/\partial u\),
+        and run the backward Riccati-type recursion from \(V_x = \nabla V(\bar x_N)\), \(V_{xx} = \nabla^2 V(\bar x_N)\):
+      </p>
+      \[
+      \begin{aligned}
+        Q_x &= \ell_x + A_k^{\mathsf T} V_x, & Q_u &= \ell_u + B_k^{\mathsf T} V_x, \\
+        Q_{xx} &= \ell_{xx} + A_k^{\mathsf T} V_{xx} A_k, & Q_{uu} &= \ell_{uu} + B_k^{\mathsf T} V_{xx} B_k + \mu, \qquad Q_{ux} = B_k^{\mathsf T} V_{xx} A_k, \\
+        \kappa_k &= \operatorname{clip}_{\mathcal U}\!\big(\bar u_k - Q_{uu}^{-1} Q_u\big) - \bar u_k, & K_k &= \begin{cases} -Q_{uu}^{-1} Q_{ux} & \text{if the input is not saturated,} \\ 0 & \text{otherwise,} \end{cases} \\[4pt]
+        V_x &\leftarrow Q_x + K_k^{\mathsf T} Q_{uu} \kappa_k + K_k^{\mathsf T} Q_u + Q_{ux}^{\mathsf T} \kappa_k, &
+        V_{xx} &\leftarrow Q_{xx} + K_k^{\mathsf T} Q_{uu} K_k + K_k^{\mathsf T} Q_{ux} + Q_{ux}^{\mathsf T} K_k,
+      \end{aligned}
+      \]
+      <p>
+        for \(k = N-1, \dots, 0\). Here \(\ell = h L\) is the stage cost with
+        Gauss&ndash;Newton Hessians (always positive semidefinite) and \(\mu > 0\) is a Levenberg&ndash;Marquardt regularisation. The forward pass
+        simulates the nonlinear model under the affine feedback policy
+        \(u_k = \bar u_k + \alpha \kappa_k + K_k (x_k - \bar x_k)\), with a backtracking line search on \(\alpha\). For linear dynamics, a quadratic cost and no input limits, the \(V_{xx}\) recursion reduces to the discrete-time Riccati equation of LQR, and one iteration is exact. In real-time fashion only up to
+        four iterations are run per \(\Delta T\), warm-started from the shifted previous plan and its gains \(K_k\). Each step takes about a millisecond.
+      </p>
+
+      <h3>Stability and the terminal cost</h3>
+      <p>
+        A finite horizon can make the optimal short-term behaviour lead away from the long-term goal. Theorem 4.1 of Murray&rsquo;s notes gives a
+        sufficient condition: if the terminal cost is a control Lyapunov function satisfying
+      </p>
+      \[ \min_{u \in \mathcal U} \Big(\frac{\partial V}{\partial x} f(x,u) + L(x,u)\Big) \le 0 \]
+      <p>
+        in a neighbourhood of the origin, the receding
+        horizon trajectories converge to zero exponentially for every \(T > 0\) and \(\Delta T \in (0, T]\). A natural choice is
+        \(V(x) = x^{\mathsf T} P x\), with \(P\) the solution of the algebraic Riccati equation for the linearisation at the upright equilibrium.
+        The demo uses the simpler, heuristic \(V = \gamma L(x,0)\) together with a horizon long enough to make the swing-up feasible.
+        Replacing it with the Riccati terminal cost is a good exercise.
+      </p>
+
+      <h3>Further reading</h3>
+      <p>
+        Richard Murray&rsquo;s <a href="https://www.cds.caltech.edu/~murray/amwiki/OBC.html"><em>Optimization-Based Control</em></a>,
+        the supplement to &Aring;str&ouml;m and Murray&rsquo;s <em>Feedback Systems</em> and the notes for Caltech&rsquo;s CDS&nbsp;112,
+        is an excellent resource for learning more on this topic. It covers trajectory generation, optimal control, receding horizon
+        control (including the stability theory above) and Kalman filtering. The notation on this page follows it.
+      </p>
+      <p class="mpc-links">
+        <a class="mpc-cta" href="https://github.com/mandralis/casadi_nmpc_examples">Code on GitHub <span>&rarr;</span></a>
+        <a href="https://www.cds.caltech.edu/~murray/amwiki/OBC.html">Optimization-Based Control (R. M. Murray)</a>
+        <a href="teaching.html">Back to Teaching</a>
+      </p>
+
+  </main>
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="foot-brand">
+        <p class="lab">Robotic Intelligence Lab</p>
+        <a class="uni-logo" href="https://www.eng.cam.ac.uk/"><img src="media/cambridge-logo.png" alt="University of Cambridge" width="174" height="35"></a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:imm38@cam.ac.uk">imm38@cam.ac.uk</a><br>Department of Engineering<br>Trumpington Street, Cambridge CB2 1PZ</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://scholar.google.com/citations?hl=en&user=56UwRyEAAAAJ">Google Scholar</a></li>
+          <li><a href="https://github.com/mandralis">GitHub</a></li>
+          <li><a href="people.html">Ioannis Mandralis</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
